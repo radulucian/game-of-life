@@ -1,40 +1,24 @@
 package game;
 
-import java.util.Random;
-
-public class Life {
+public class Creator {
 
 private boolean[][] cells;
 
-public Life() {
-	int SIZE = 8;
+public Creator() {
+	int row,col,peer;
+	int world = 10;
 	
-	int[][] pairs = {{5,5},{5,6},{5,7}};
-	cells = new boolean[SIZE][];
+	int[][] points = {{5,5},{5,6},{5,7}};
+	cells = new boolean[world][world];
 	
-	for (int row = 0; row < SIZE; row ++) {
-		cells[row] = new boolean[SIZE] ;
+	for (row = 0; row < world; row ++) {
+		cells[row] = new boolean[world] ;
 	}
 	
-	for (int pair = 0; pair < pairs.length; pair ++) {
-		final int row = pairs[pair][0];
-		final int col = pairs[pair][1];
+	for (peer = 0; peer < points.length; peer++) {
+		row = points[peer][0];
+		col = points[peer][1];
 		cells[row][col] = true;
-	}
-	
-}
-
-// Initialise size * size grid with random cells.
-public Life(int size) {
-	final Random rand = new Random();
-	cells = new boolean[ size][ ];
-
-	for (int row = 0; row < size; row ++) {
-		cells[ row ] = new boolean[ size ];
-		
-		for (int col = 0; col < size; col ++) {
-			cells[ row ][ col ] = (rand.nextInt( 2 ) == 0);
-		}
 	}
 	
 }
@@ -42,12 +26,12 @@ public Life(int size) {
 
 public void next() {
 
-	int SIZE;
-	SIZE=cells.length;
-	boolean[][] tempCells = new boolean [SIZE] [SIZE]; 
+	int world = 0;
+	world=cells.length;
+	boolean[][] tempCells = new boolean [world] [world]; 
 
-	for(int i=0; i<SIZE; i++) {
-		for( int j=0; j<SIZE; j++ ) {
+	for(int i=0; i<world; i++) {
+		for( int j=0; j<world; j++ ) {
 			tempCells[i][j] = cells[i][j];
 		}
 	} 
@@ -93,7 +77,7 @@ public String toString() {
 	for (int row = 0; row < cells.length; row ++) {
 		final boolean[] column = cells[ row ];
 			for (int col = 0; col < column.length; col ++) {
-				result = result + (column[ col ] ? " @ " : " . ");
+				result = result + (column[ col ] ? " O " : " . ");
 			}
 		result = result + "\n";
 	}

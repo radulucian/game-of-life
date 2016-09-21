@@ -4,14 +4,12 @@ public class MainApp {
 
 public static void main( String[] args ) {
   
-	Life generation = new Life();
+	Creator generation = new Creator();
   
-	System.out.println(generation);
-	for (int i = 0; i <= 10; i++) {
+	for (int i = 0; i <= 2; i++) {
 	    System.out.println(generation.toString());
 	    generation.next();
-	}
+	}	
 }
-
 
 }
