@@ -6,22 +6,20 @@ public class Life {
 
 private boolean[][] cells;
 
-//Initialises 6 * 6 grid with Glider pattern.
 public Life() {
-	final int SIZE = 10;
+	int SIZE = 8;
 	
-	// Arguably, this should have been a class (static) array.
-	final int[][] pairs = {{0,0},{2,4},{3,3},{1,2},{2,2},{3,2}};
-	cells = new boolean[ SIZE ][ ];
+	int[][] pairs = {{5,5},{5,6},{5,7}};
+	cells = new boolean[SIZE][];
 	
 	for (int row = 0; row < SIZE; row ++) {
-		cells[ row ] = new boolean[ SIZE ];
+		cells[row] = new boolean[SIZE] ;
 	}
 	
 	for (int pair = 0; pair < pairs.length; pair ++) {
-		final int row = pairs[ pair ][ 0 ];
-		final int col = pairs[ pair ][ 1 ];
-		cells[ row ][ col ] = true;
+		final int row = pairs[pair][0];
+		final int col = pairs[pair][1];
+		cells[row][col] = true;
 	}
 	
 }
@@ -29,7 +27,7 @@ public Life() {
 // Initialise size * size grid with random cells.
 public Life(int size) {
 	final Random rand = new Random();
-	cells = new boolean[ size ][ ];
+	cells = new boolean[ size][ ];
 
 	for (int row = 0; row < size; row ++) {
 		cells[ row ] = new boolean[ size ];
@@ -95,7 +93,7 @@ public String toString() {
 	for (int row = 0; row < cells.length; row ++) {
 		final boolean[] column = cells[ row ];
 			for (int col = 0; col < column.length; col ++) {
-				result = result + (column[ col ] ? " x " : " . ");
+				result = result + (column[ col ] ? " @ " : " . ");
 			}
 		result = result + "\n";
 	}
