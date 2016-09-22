@@ -5,5 +5,7 @@ public class App {
 	
 		LifeCreator life = new LifeCreator(10,10);
 		life.createLife();
+		life.evolve();
+		life.evolve();
 	}
 }
