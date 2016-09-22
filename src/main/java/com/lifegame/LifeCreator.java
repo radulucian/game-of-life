@@ -41,6 +41,18 @@ public class LifeCreator {
 	
 	public void evolve(){
 		
+		for (int i = 0; i < matrix.length; i++) {
+		    for (int j = 0; j < matrix[i].length; j++) {
+		      if (matrix[i][j] == 1) {
+		        System.out.print(i + 1);
+		        System.out.print(j + 1);
+		        System.out.println();
+		      }
+		     
+		    }
+		  }
+		
+		
 		for (int i = 0; i < 10; i++){
 			for (int j = 0; j < 10; j++){	
 				if (countNeighbours(i,j) == 3){
