@@ -4,6 +4,7 @@ public class LifeCreator {
 
 	private int row;
 	private int column;
+	public int counter = 0;
 
 	public int[][] matrix, tempMatrix;
 //	public static int[][] points = { { 8, 2 }, { 8, 3 }, { 3, 6 }, { 2, 6 }, { 4, 6 }, { 3, 5 }, { 2, 5 }, { 4, 5 }, { 6, 8 } };
@@ -33,26 +34,38 @@ public class LifeCreator {
 			int b = points[x][1] - 1;
 
 			matrix[a][b] = 1;
+			counter=counter+1;
 		}
 
 		displayMatrix(matrix);	
+
 	}
 
 	
 	public void evolve(){
 		
+		int[][] contents = new int[counter][1];
+	       System.out.println(contents.length);
 		for (int i = 0; i < matrix.length; i++) {
 		    for (int j = 0; j < matrix[i].length; j++) {
 		      if (matrix[i][j] == 1) {
-		        System.out.print(i + 1);
-		        System.out.print(j + 1);
+		    	for (int k=0; k<=1; k++){  
+//		        System.out.print(i + 1);
+//		        System.out.print(j + 1);
+//		        System.out.println();
+		    		
+		        contents[k][k] = i+1;
+		        contents[k][k+1] = j+1;
+		        System.out.print(contents[k][k]);
+		        System.out.print(contents[k][k+1]);
+		        System.out.println(contents.length);
 		        System.out.println();
 		      }
-		     
+		      }
 		    }
 		  }
 		
-		
+
 		for (int i = 0; i < 10; i++){
 			for (int j = 0; j < 10; j++){	
 				if (countNeighbours(i,j) == 3){
@@ -62,11 +75,11 @@ public class LifeCreator {
 		}
 		
 		
-		for (int inputSize = 0; inputSize < points.length; inputSize++) {
-			int a = points[inputSize][0] - 1;
-			int b = points[inputSize][1] - 1;
+		for (int inputSize = 0; inputSize < contents.length; inputSize++) {
+			int a = contents[inputSize][0] - 1;
+			int b = contents[inputSize][1] - 1;
 
-			tempMatrix[a][b] = countNeighbours(points[inputSize][0], points[inputSize][1]);
+			tempMatrix[a][b] = countNeighbours(contents[inputSize][0], contents[inputSize][1]);
 			
 			if (tempMatrix[a][b] <= 1) {
 				tempMatrix[a][b] = 0; //Each cell with one or no neighbors dies
