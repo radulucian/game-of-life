@@ -1,5 +1,7 @@
 package com.lifegame;
 
+import java.util.Arrays;
+
 public class LifeCreator {
 
 	private int row;
@@ -9,6 +11,8 @@ public class LifeCreator {
 	public int[][] matrix, tempMatrix;
 //	public static int[][] points = { { 8, 2 }, { 8, 3 }, { 3, 6 }, { 2, 6 }, { 4, 6 }, { 3, 5 }, { 2, 5 }, { 4, 5 }, { 6, 8 } };
 	public static int[][] points = { { 8, 2 }, { 8, 3 }, { 8, 4 }};
+//	public static int[][] points = { { 9, 3 }, { 9, 4 }, { 9, 5 }};
+//	public static int[][] points = {{5,4},{6,4},{7,4},{8,4}};
 	
 	public LifeCreator(int row, int column) {
 		this.row = row;
@@ -19,8 +23,8 @@ public class LifeCreator {
 		int rows = this.row;
 		int columns = this.column;
 		
-		matrix = new int[row][column];
-		tempMatrix = new int[row][column];
+		matrix = new int[rows][columns];
+		tempMatrix = new int[rows][columns];
 		
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
@@ -28,15 +32,20 @@ public class LifeCreator {
 				tempMatrix[i][j] = 0;
 			}
 		}
-
+		
+//		for (int i = 0; i<10; i++){
+//			Arrays.fill(matrix[0], 0);
+//			Arrays.fill(tempMatrix[0], 0);
+//		}
+		
+		int a,b;
 		for (int x = 0; x < points.length; x++) {
-			int a = points[x][0] - 1;
-			int b = points[x][1] - 1;
+			a = points[x][0];
+			b = points[x][1];
 
 			matrix[a][b] = 1;
-			counter=counter+1;
+			counter = counter+1;
 		}
-
 		displayMatrix(matrix);	
 
 	}
@@ -44,54 +53,113 @@ public class LifeCreator {
 	
 	public void evolve(){
 		
-		int[][] contents = new int[counter][1];
-	       System.out.println(contents.length);
+		int[][] contents = new int[counter][2];
+	    int step = 0;
+		
 		for (int i = 0; i < matrix.length; i++) {
 		    for (int j = 0; j < matrix[i].length; j++) {
-		      if (matrix[i][j] == 1) {
-		    	for (int k=0; k<=1; k++){  
-//		        System.out.print(i + 1);
-//		        System.out.print(j + 1);
-//		        System.out.println();
-		    		
-		        contents[k][k] = i+1;
-		        contents[k][k+1] = j+1;
-		        System.out.print(contents[k][k]);
-		        System.out.print(contents[k][k+1]);
-		        System.out.println(contents.length);
-		        System.out.println();
-		      }
-		      }
+		    	if (matrix[i][j] == 1) {  
+		    		tempMatrix[i][j] = countNeighbours(i, j);
+		    	}
 		    }
-		  }
+		}
 		
-
-		for (int i = 0; i < 10; i++){
-			for (int j = 0; j < 10; j++){	
-				if (countNeighbours(i,j) == 3){
-					tempMatrix[i-1][j-1] = 1; //Empty cell with three neighbors becomes populated
+		for (int i = 0; i < tempMatrix.length; i++) {
+		    for (int j = 0; j < tempMatrix[i].length; j++) {
+		    	
+		    	if (tempMatrix[i][j] <= 1) {
+					tempMatrix[i][j] = 0; //Each cell with one or no neighbours dies
 				}
-			}
+				else if (tempMatrix[i][j] >= 4){
+					tempMatrix[i][j] = 0; //Each cell with four or more neighbours dies
+				}
+				else if ((tempMatrix[i][j] == 2) || (tempMatrix[i][j] == 3)){
+					tempMatrix[i][j] = 1; //Each cell with two or three neighbours survives
+				}
+		    	
+		    	if ((tempMatrix[i][j] == 0) && (countNeighbours(i,j) == 3)){
+					
+					tempMatrix[i][j] = 1; //Empty cell with three neighbours becomes populated
+				}
+		    }
 		}
 		
+//		for (int i = 0; i < tempMatrix.length; i++) {
+//		    for (int j = 0; j < tempMatrix[i].length; j++) {		    	
+//		    	if ((tempMatrix[i][j] == 0) && (countNeighbours(i,j) == 3)){
+//					
+//					tempMatrix[i][j] = 1; //Empty cell with three neighbours becomes populated
+//				}
+//		    }
+//		}
+    		
 		
-		for (int inputSize = 0; inputSize < contents.length; inputSize++) {
-			int a = contents[inputSize][0] - 1;
-			int b = contents[inputSize][1] - 1;
+		
+		
+		
+		
+		
+//		if (tempMatrix[a][b] <= 1) {
+//		tempMatrix[a][b] = 0; //Each cell with one or no neighbours dies
+//	}
+//	else if (tempMatrix[a][b] >= 4){
+//		tempMatrix[a][b] = 0; //Each cell with four or more neighbours dies
+//	}
+//	else if ((tempMatrix[a][b] == 2) || (tempMatrix[a][b] == 3)){
+//		tempMatrix[a][b] = 1; //Each cell with two or three neighbours survives
+//	}
+		
+//		for (int i = 0; i < matrix.length; i++) {
+//		    for (int j = 0; j < matrix[i].length; j++) {
+//		    	if (matrix[i][j] == 1) {  
+//			    	contents[step][0] = i;
+//			    	contents[step][1] = j;  	
+//			    	step = step + 1;
+//		    	}
+//		    }
+//		  }
 
-			tempMatrix[a][b] = countNeighbours(contents[inputSize][0], contents[inputSize][1]);
-			
-			if (tempMatrix[a][b] <= 1) {
-				tempMatrix[a][b] = 0; //Each cell with one or no neighbors dies
-			}
-			else if (tempMatrix[a][b] >= 4){
-				tempMatrix[a][b] = 0; //Each cell with four or more neighbors dies
-			}
-			else if ((tempMatrix[a][b] == 2) || (tempMatrix[a][b] == 3)){
-				tempMatrix[a][b] = 1; //Each cell with two or three neighbors survives
-			}
-		}
+//		System.out.println("content length:"+contents.length);
+//		for (int inputSize = 0; inputSize < 10; inputSize++) {
+//			
+//			int a = contents[inputSize][0] -1;
+//			int b = contents[inputSize][1] -1;
+//
+//			System.out.println(a + "," + b);
+//			
+//			try{
+//			tempMatrix[a][b] = countNeighbours(a, b);
+//			System.out.println(contents[inputSize][0] + "," + contents[inputSize][1] + "has" + countNeighbours(contents[inputSize][0], contents[inputSize][1]) +"neighb");
+//			}
+//			catch (ArrayIndexOutOfBoundsException e) {
+//				continue;
+//			}
+//			
+//			
+//			if (tempMatrix[a][b] <= 1) {
+//				tempMatrix[a][b] = 0; //Each cell with one or no neighbours dies
+//			}
+//			else if (tempMatrix[a][b] >= 4){
+//				tempMatrix[a][b] = 0; //Each cell with four or more neighbours dies
+//			}
+//			else if ((tempMatrix[a][b] == 2) || (tempMatrix[a][b] == 3)){
+//				tempMatrix[a][b] = 1; //Each cell with two or three neighbours survives
+//			}
+//		}
 		
+//		for (int i = 0; i < 10; i++){
+//			for (int j = 0; j < 10; j++){	
+//				System.out.println(i + "," + j + "has" + countNeighbours(i, j) +"neighb1");
+//				if ((tempMatrix[i][j] == 0) && (countNeighbours(i,j) == 3)){
+//					
+//					tempMatrix[i][j] = 1; //Empty cell with three neighbours becomes populated
+//				}
+//			}
+//		}
+//		System.out.println("MATRIX");
+//		displayMatrix(matrix);
+//		System.out.println();
+//		System.out.println("TEMP");
 		displayMatrix(tempMatrix);
 		matrix = tempMatrix;
 		
@@ -103,11 +171,10 @@ public class LifeCreator {
 
 		for (int i = row - 1; i <= row + 1; i++) {
 			for (int j = column - 1; j <= column + 1; j++)
-				if (i != row || j != column)
-					try {
-						if (matrix[i - 1][j - 1] == 1)
-							count++;
-					} catch (ArrayIndexOutOfBoundsException e) {
+				try {
+					if ((i != row || j != column) && (matrix[i][j] == 1)) {
+							count++;}}
+					catch (ArrayIndexOutOfBoundsException e) {
 						continue;
 					}
 
@@ -117,14 +184,11 @@ public class LifeCreator {
 	}
 	
 	private void displayMatrix(int[][] matrixName) {
-		
-		int rows = this.row;
-		int columns = this.column;
+
 		int[][] grid = matrixName;
 		
-		
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < columns; j++) {
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[i].length; j++) {
 				System.out.print(grid[i][j] + "  ");
 			}
 			System.out.println();
