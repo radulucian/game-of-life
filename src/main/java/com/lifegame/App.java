@@ -1,11 +1,16 @@
 package com.lifegame;
 
 public class App {
-	public static void main(String[] args) {
 	
+	
+	public static void main(String[] args) {
+		
+		int[][] first,second,third = new int[10][10];
+		
 		LifeCreator life = new LifeCreator(10,10);
-		life.createLife();
-		life.evolve();
-		life.evolve();
+		first = life.createLife();
+		second = life.evolve(first);
+		third = life.evolve(second);
+
 	}
 }
