@@ -160,6 +160,7 @@ public class LifeCreator {
 //		displayMatrix(matrix);
 //		System.out.println();
 //		System.out.println("TEMP");
+		
 		displayMatrix(tempMatrix);
 		matrix = tempMatrix;
 		
