@@ -6,8 +6,8 @@ public class LifeCreator {
 	private int column;
 
 	public int[][] matrix, tempMatrix;
-//	public static int[][] points = { { 8, 2 }, { 8, 3 }, { 3, 6 }, { 2, 6 }, { 4, 6 }, { 3, 5 }, { 2, 5 }, { 4, 5 }, { 6, 8 } };
-	public static int[][] points = { { 5, 2 }, { 5, 3 }, { 5, 4 }};
+	public static int[][] points = { { 8, 2 }, { 8, 3 }, { 3, 6 }, { 2, 6 }, { 4, 6 }, { 3, 5 }, { 2, 5 }, { 4, 5 }, { 6, 8 } };
+//	public static int[][] points = { { 5, 2 }, { 5, 3 }, { 5, 4 }};
 	
 	public LifeCreator(int row, int column) {
 		this.row = row;
@@ -29,16 +29,15 @@ public class LifeCreator {
 		return matrix;
 	}
 
-	public int[][] evolve(int[][] matrix){
+	public int[][] evolve(){
 		
 		tempMatrix = new int[this.row][this.column];
-	
+		
+
 		for (int i = 0; i < matrix.length; i++) {
 		    for (int j = 0; j < matrix[i].length; j++) {
 		    	if (matrix[i][j] == 1) {  
 		    		tempMatrix[i][j] = countNeighbours(i, j);
-		    		System.out.print(i+","+j+" has "+ countNeighbours(i, j) + " neighbour");
-		    		System.out.println("\n");
 		    	}
 		    }
 		}
@@ -66,6 +65,7 @@ public class LifeCreator {
 		displayMatrix(matrix);
 		
 		return matrix;
+		
 	}
 	
 	public int countNeighbours(int row, int column) {
@@ -87,10 +87,20 @@ public class LifeCreator {
 	private void displayMatrix(int[][] matrixName) {
 
 		int[][] grid = matrixName;
+		String transform,buffer;
 		
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
-				System.out.print(grid[i][j] + "  ");
+				buffer = Integer.toString(grid[i][j]);
+				
+				if (grid[i][j] == 1) {
+					transform = buffer.replace("1","O");
+				}
+				else{
+					transform = buffer.replace("0",".");
+				}
+				
+				System.out.print(transform + "  ");
 			}
 			System.out.println();
 		}
