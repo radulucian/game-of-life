@@ -7,7 +7,7 @@ public class LifeCreator {
 
 	public int[][] matrix, tempMatrix;
 	public static int[][] points = { { 8, 2 }, { 8, 3 }, { 3, 6 }, { 2, 6 }, { 4, 6 }, { 3, 5 }, { 2, 5 }, { 4, 5 }, { 6, 8 } };
-//	public static int[][] points = { { 5, 2 }, { 5, 3 }, { 5, 4 }};
+//	public static int[][] points = { { 5, 2 }, { 1, 3 }, { 5, 4 }};
 	
 	public LifeCreator(int row, int column) {
 		this.row = row;
